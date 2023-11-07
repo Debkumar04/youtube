@@ -1,53 +1,26 @@
-const express=require("express");
-const videoRouter=require("./routes/videoRoutes");//
-const mongoose= require("mongoose");
+const express = require("express");
+const videoRouter = require("./routes/videoRoutes");
+const mongoose = require("mongoose");
+const authRouter = require("./routes/authRoutes");
+const cors = require("cors");
 
-mongoose.connect("mongodb://localhost:27017/youtube").then(()=>{
+mongoose
+  .connect(
+    "mongodb+srv://youtubeclone:1234@cluster0.5ofd4si.mongodb.net/youtubeclone_19065081"
+  )
+  .then(() => {
+    console.log("DB connected");
+  });
 
-     console.log("db connected");
-
-});
-
-const app=express();
-
+const app = express();
 app.use(express.json());
-app.use(videoRouter);    //
+app.use(cors());
 
-// const deb=[
-//     {
-//         title: 'what about today',
-//         author: 'code-with-harry',
-//         url: 'google.com'
-//     },
-//     {
-//         title: 'who are you',
-//         author: 'love babbar',
-//         url: 'google.com'
-//     },
-//     {
-//         title: 'the cpp',
-//         author: 'lakshay',
-//         url: 'google.com'
-//     }
-// ]
+app.use(videoRouter);
+app.use(authRouter);
 
+app.listen(3000, myCallbackFunction);
 
-
-// app.get('/video' , (req,res)=>{  //function () or ()=>
-
-//     res.send(deb);
-// });
-
-// app.post('/video' , (req,res)=>{
-    
-//     console.log(req.body);
-//     // res.send(deb);
-// });
-
-
-app.listen(1000, onServerStart);
-
-function onServerStart(){
-
-    console.log("server started");
+function myCallbackFunction() {
+  console.log("Server Started");
 }
