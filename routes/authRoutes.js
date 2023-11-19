@@ -44,5 +44,15 @@ authRouter.post("/login", async (req, res) => {
     });
   }
 });
+authRouter.get('/profile',async(req, res)=>{
+  try{
+    const user=req.user;
+    const id=user.id;
+    const userData= await User.findById(id);
+    res.send(userData);
 
+  }catch (error){
+    res.send(error);
+  }
+});
 module.exports = authRouter;
